@@ -6,13 +6,14 @@ import (
 	"time"
 
 	"github.com/buaazp/fasthttprouter"
+	"github.com/lab259/cors"
 	"github.com/valyala/fasthttp"
 )
 
 // Service is an http server that handles REST requests.
 type Service struct {
-	db     *DBConnection
-	Router *fasthttprouter.Router
+	db      *DBConnection
+	Handler fasthttp.RequestHandler
 }
 
 // NewService creates a new instance of a Service.
@@ -21,7 +22,7 @@ func NewService(db *DBConnection) Service {
 	router := fasthttprouter.New()
 	router.GET("/domains/:domain", service.getDomain)
 	router.GET("/domains", service.getPreviousDomains)
-	service.Router = router
+	service.Handler = cors.Default().Handler(router.Handler)
 
 	return service
 }

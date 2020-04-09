@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	port string = ":6463"
+	port string = ":8090"
 )
 
 func main() {
@@ -15,5 +15,5 @@ func main() {
 	service := NewService(connection)
 	defer connection.db.Close()
 
-	log.Fatal(fasthttp.ListenAndServe(port, service.Router.Handler))
+	log.Fatal(fasthttp.ListenAndServe(port, service.Handler))
 }
