@@ -12,8 +12,7 @@
     "core-js": "^3.6.4",
     "mdbvue": "6.6.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.6",
-    "vuex": "^3.1.3"
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
