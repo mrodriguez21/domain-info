@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -19,6 +20,11 @@ func validateDomainName(domain string) bool {
  ]{2,3})$`)
 
 	return regExp.MatchString(domain)
+}
+
+func validateDomainExists(domain string) bool {
+	_, err := net.LookupIP(domain)
+	return err == nil
 }
 
 func generateURLFromDomain(domain string) string {

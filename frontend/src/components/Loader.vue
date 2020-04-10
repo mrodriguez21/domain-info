@@ -1,6 +1,6 @@
 <!--HTML and CSS taken from: https://icons8.com/cssload -->
 <template>
-  <div>
+  <div id="loader">
     <div class="cssload-dots">
       <div class="cssload-dot"></div>
       <div class="cssload-dot"></div>
@@ -37,8 +37,11 @@
 </template>
 
 <style>
+#loader {
+  position: relative;
+}
 #loading-message {
-  margin-top: 140px;
+  margin-top: 100px;
 }
 .cssload-dots {
   width: 0;

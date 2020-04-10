@@ -22,8 +22,8 @@ func SplitBySpace(s string, n int) (words []string) {
 	return
 }
 
-func RunWhoIsCommand(ip string) (output string, err error) {
-	cmd := exec.Command("whois", ip)
+func RunCommand(command string, ip string) (output string, err error) {
+	cmd := exec.Command(command, ip)
 	stdout, err := cmd.Output()
 
 	if err == nil {

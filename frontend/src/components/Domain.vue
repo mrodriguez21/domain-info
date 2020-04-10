@@ -179,6 +179,10 @@ export default {
   justify-content: space-around;
   margin-right: 10px;
 }
+#fav {
+  align-items: center;
+  display: flex;
+}
 #info {
   display: flex;
   flex-direction: column;

@@ -31,10 +31,17 @@ func (s *Service) getDomain(ctx *fasthttp.RequestCtx) {
 	domainName, ok := ctx.UserValue("domain").(string)
 	if !ok {
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
+		return
 	}
 	if isDomain := validateDomainName(domainName); !isDomain {
-		fmt.Println("Invalid domain.")
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
+		ctx.SetBodyString("Invalid domain name received.")
+		return
+	}
+	if domainExists := validateDomainExists(domainName); !domainExists {
+		ctx.SetStatusCode(fasthttp.StatusNotFound)
+		ctx.SetBodyString(fmt.Sprintf("Domain %v doesn't exist.", domainName))
+		return
 	}
 
 	domain, _ := s.db.getDomain(domainName)
