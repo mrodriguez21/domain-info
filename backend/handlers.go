@@ -57,46 +57,42 @@ func (s *Service) getDomain(ctx *fasthttp.RequestCtx) {
 
 		// Check if servers have changed
 		hasChanged := domain.IsDown != newDomain.IsDown
-		if !hasChanged {
-			oldServers := make(map[string]Server)
-			newServers := make(map[string]Server)
 
-			for _, server := range domain.Servers {
-				oldServers[server.Address] = server
+		oldServers := make(map[string]Server)
+		newServers := make(map[string]Server)
+
+		for _, server := range domain.Servers {
+			oldServers[server.Address] = server
+		}
+		for _, server := range newDomain.Servers {
+			newServers[server.Address] = server
+		}
+
+		// Check if old server is same as current or no longer exists
+		for _, server := range domain.Servers {
+			newServer, ok := newServers[server.Address]
+			if !ok {
+				s.db.deleteServer(server.Address)
+				hasChanged = true
+			} else if newServer != server {
+				s.db.updateServer(newServer)
+				hasChanged = true
 			}
-			for _, server := range newDomain.Servers {
-				newServers[server.Address] = server
-			}
+		}
 
-			fmt.Println(oldServers)
-			fmt.Println(newServers)
-
-			// Check if old server is same as current or no longer exists
-			for _, server := range domain.Servers {
-				newServer, ok := newServers[server.Address]
-				if !ok {
-					s.db.deleteServer(server.Address)
-					hasChanged = true
-				} else if newServer != server {
-					s.db.updateServer(newServer)
-					hasChanged = true
-				}
-			}
-
-			// Check if new server didn't exist
-			for _, server := range newDomain.Servers {
-				_, ok := oldServers[server.Address]
-				if !ok {
-					s.db.createServer(server, domain.Name)
-					hasChanged = true
-				}
+		// Check if new server didn't exist
+		for _, server := range newDomain.Servers {
+			_, ok := oldServers[server.Address]
+			if !ok {
+				s.db.createServer(server, domain.Name)
+				hasChanged = true
 			}
 		}
 
 		newDomain.ServersChanged = hasChanged
-
 		//Update domain's record in DB
 		domain = newDomain
+		fmt.Println(domain)
 		s.db.updateDomain(domain)
 	}
 

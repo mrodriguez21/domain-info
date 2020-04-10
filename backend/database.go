@@ -201,20 +201,18 @@ func (connection *DBConnection) createDomain(domain Domain) {
 
 func (connection *DBConnection) updateDomain(domain Domain) error {
 	_, err := connection.db.Exec(
-		fmt.Sprintf(
-			`UPDATE domains 
-			SET servers_changed = %v, ssl_grade = '%v', previous_ssl_grade = '%v', 
-			logo = '%v', title = '%v', is_down = %v, last_checked = '%v'
-			WHERE name = '%v'`,
-			domain.ServersChanged,
-			domain.SSLGrade,
-			domain.PreviousSSLGrade,
-			domain.Logo,
-			domain.Title,
-			domain.IsDown,
-			domain.LastChecked,
-			domain.Name,
-		),
+		`UPDATE domains 
+			SET servers_changed = $1, ssl_grade = $2, previous_ssl_grade = $3, 
+			logo = $4, title = $5, is_down = $6, last_checked = $7
+			WHERE name = $8`,
+		domain.ServersChanged,
+		domain.SSLGrade,
+		domain.PreviousSSLGrade,
+		domain.Logo,
+		domain.Title,
+		domain.IsDown,
+		domain.LastChecked,
+		domain.Name,
 	)
 
 	return err

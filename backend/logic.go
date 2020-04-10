@@ -23,7 +23,7 @@ func validateDomainName(domain string) bool {
 }
 
 func validateDomainExists(domain string) bool {
-	_, err := net.LookupIP(domain)
+	_, err := net.LookupNS(domain)
 	return err == nil
 }
 

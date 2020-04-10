@@ -58,22 +58,18 @@
         <div>{{ domain.title }}</div>
       </div>
     </div>
-    <div class="title">Servers</div>
-    <b-table striped :items="domain.servers" :fields="fields">
-      <template v-slot:table-caption>
-        <p class="text-center">
-          *Servers have {{ domain.servers_changed ? "" : "not" }} changed since
-          last request received.
-        </p>
-      </template>
-    </b-table>
+    <ServersTable
+      :servers="domain.servers"
+      :servers_changed="domain.servers_changed"
+    ></ServersTable>
   </div>
 </template>
 
 <script>
 import { mdbTooltip } from "mdbvue";
+import ServersTable from "@/components/ServersTable.vue";
 export default {
-  components: { mdbTooltip },
+  components: { mdbTooltip, ServersTable },
   computed: {
     iconColor() {
       switch (this.domain.ssl_grade) {
@@ -127,29 +123,6 @@ export default {
         ? "text-black-50"
         : "white-text";
     },
-  },
-  data() {
-    return {
-      fields: [
-        {
-          key: "address",
-          sortable: true,
-        },
-        {
-          key: "ssl_grade",
-          label: "SSL Grade",
-          sortable: true,
-        },
-        {
-          key: "country",
-          sortable: true,
-        },
-        {
-          key: "owner",
-          sortable: true,
-        },
-      ],
-    };
   },
   props: {
     name: String,
