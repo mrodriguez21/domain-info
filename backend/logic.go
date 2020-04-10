@@ -188,8 +188,10 @@ func getSSLInfo(domain string) ([]Server, bool, bool, string, string, time.Time,
 		}
 		serverData.Country, serverData.Owner = getWhoIs(serverData.Address)
 		if serverData.Owner == "" && server.Name != "" {
-			serverData.Address = server.Name
 			serverData.Country, serverData.Owner = getWhoIs(serverData.Address)
+			if serverData.Country != "" || serverData.Owner != "" {
+				serverData.Address = server.Name
+			}
 		}
 		serversData = append(serversData, serverData)
 	}

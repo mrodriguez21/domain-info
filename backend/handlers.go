@@ -37,9 +37,9 @@ func (s *Service) getDomain(ctx *fasthttp.RequestCtx) {
 		ctx.SetStatusCode(fasthttp.StatusBadRequest)
 	}
 
-	domain, err := s.db.getDomain(domainName)
+	domain, _ := s.db.getDomain(domainName)
 
-	if err != nil {
+	if domain.Name == "" {
 		// Get the domain's info and save to DB
 		domain, _ = getDomainData(domainName)
 		s.db.createDomain(domain)
@@ -49,10 +49,10 @@ func (s *Service) getDomain(ctx *fasthttp.RequestCtx) {
 		newDomain.PreviousSSLGrade = domain.SSLGrade
 
 		// Check if servers have changed
-		hasChanged := domain.IsDown == newDomain.IsDown
+		hasChanged := domain.IsDown != newDomain.IsDown
 		if !hasChanged {
-			var oldServers map[string]Server
-			var newServers map[string]Server
+			oldServers := make(map[string]Server)
+			newServers := make(map[string]Server)
 
 			for _, server := range domain.Servers {
 				oldServers[server.Address] = server
@@ -60,6 +60,9 @@ func (s *Service) getDomain(ctx *fasthttp.RequestCtx) {
 			for _, server := range newDomain.Servers {
 				newServers[server.Address] = server
 			}
+
+			fmt.Println(oldServers)
+			fmt.Println(newServers)
 
 			// Check if old server is same as current or no longer exists
 			for _, server := range domain.Servers {
@@ -77,13 +80,13 @@ func (s *Service) getDomain(ctx *fasthttp.RequestCtx) {
 			for _, server := range newDomain.Servers {
 				_, ok := oldServers[server.Address]
 				if !ok {
-					s.db.createServer(server)
+					s.db.createServer(server, domain.Name)
 					hasChanged = true
 				}
 			}
-
-			newDomain.ServersChanged = hasChanged
 		}
+
+		newDomain.ServersChanged = hasChanged
 
 		//Update domain's record in DB
 		domain = newDomain

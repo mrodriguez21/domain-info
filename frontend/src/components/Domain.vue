@@ -28,7 +28,11 @@
         </mdb-tooltip>
       </div>
       <div id="fav">
-        <img class="domain-logo" :src="domain.logo" alt="No logo found." />
+        <img
+          class="domain-logo"
+          :src="domain.logo == '' ? '../assets/not-found.png' : domain.logo"
+          alt="Logo"
+        />
       </div>
       <div id="info">
         <div id="subinfo">
