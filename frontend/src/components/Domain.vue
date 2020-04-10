@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <div id="datainfo">
-      <div id="status">
+    <div class="datainfo">
+      <div class="status">
         <mdb-tooltip trigger="hover" :options="{ placement: 'left' }">
           <span slot="tip">
             Current SSL grade
           </span>
           <div slot="reference" class="ssl_grade mb-1">
             <i class="ssl_icon fas fa-circle fa-2x" :class="iconColor"></i>
-            <span :class="textColor">{{ domain.ssl_grade }}</span>
+            <span :class="textColor">{{ domain.ssl_grade || "-" }}</span>
           </div>
         </mdb-tooltip>
         <mdb-tooltip trigger="hover" :options="{ placement: 'left' }">
@@ -18,24 +18,27 @@
           <div slot="reference" class="ssl_grade">
             <i class="ssl_icon fas fa-circle fa-2x" :class="prevIconColor"></i>
             <span :class="prevTextColor">
-              {{
-                domain.previous_ssl_grade == ""
-                  ? "-"
-                  : domain.previous_ssl_grade
-              }}
+              {{ domain.previous_ssl_grade || "-" }}
             </span>
           </div>
         </mdb-tooltip>
       </div>
-      <div id="fav">
+      <div class="fav">
         <img
+          v-if="domain.logo != ''"
           class="domain-logo"
-          :src="domain.logo == '' ? '../assets/not-found.png' : domain.logo"
+          :src="domain.logo"
           alt="Logo"
         />
+        <img
+          v-else
+          class="domain-logo"
+          src="@/assets/images/question-circle-solid.png"
+          alt="No logo found"
+        />
       </div>
-      <div id="info">
-        <div id="subinfo">
+      <div class="info">
+        <div class="subinfo">
           <span class="domain-name title">{{ name }}</span>
           <div>
             <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
@@ -57,11 +60,29 @@
         </div>
         <div>{{ domain.title }}</div>
       </div>
+      <div
+        class="toggle"
+        v-if="!domain.is_down && collapsed"
+        v-b-toggle="'collapse-' + name"
+      >
+        <i class="fas fa-chevron-down"></i>
+      </div>
     </div>
     <ServersTable
+      v-if="!domain.is_down && !collapsed"
       :servers="domain.servers"
       :servers_changed="domain.servers_changed"
     ></ServersTable>
+    <b-collapse
+      v-else-if="!domain.is_down && collapsed"
+      :id="'collapse-' + name"
+      class="mt-2"
+    >
+      <ServersTable
+        :servers="domain.servers"
+        :servers_changed="domain.servers_changed"
+      ></ServersTable>
+    </b-collapse>
   </div>
 </template>
 
@@ -127,12 +148,13 @@ export default {
   props: {
     name: String,
     domain: Object,
+    collapsed: Boolean,
   },
 };
 </script>
 
 <style>
-#datainfo {
+.datainfo {
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -146,23 +168,23 @@ export default {
   border-radius: 10px;
   /*! box-shadow: 0 1px 13px -7px black; */
 }
-#status {
+.status {
   flex-direction: column;
   display: flex;
   justify-content: space-around;
   margin-right: 10px;
 }
-#fav {
+.fav {
   align-items: center;
   display: flex;
 }
-#info {
+.info {
   display: flex;
   flex-direction: column;
   flex: 5;
   flex-grow: 1;
 }
-#subinfo {
+.subinfo {
   flex-direction: row;
   display: flex;
   flex-grow: 1;
@@ -170,7 +192,7 @@ export default {
   justify-items: self-end;
   align-self: center;
 }
-#subinfo > div {
+.subinfo > div {
   justify-self: center;
   align-self: center;
 }
@@ -196,11 +218,21 @@ export default {
   padding-bottom: 5px;
 }
 
-.title {
-  font-size: 1.5rem;
+.toggle {
+  display: flex;
+
+  align-items: center;
+
+  cursor: pointer;
+}
+.toggle > i {
+  transition: transform 0.4s ease-in-out;
+}
+.toggle:not(.collapsed) > i {
+  transform: rotate(180deg);
 }
 
-thead tr th {
-  font-weight: bold;
+.title {
+  font-size: 1.5rem;
 }
 </style>

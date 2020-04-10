@@ -1,12 +1,10 @@
 <template>
   <div class="container">
+    <h1 class="header">Previously consulted domains</h1>
     <ul>
-      <Domain
-        v-for="item in items"
-        :key="item.domain"
-        :name="item.domain"
-        :domain="item.info"
-      ></Domain>
+      <div class="domain-collapsed" v-for="item in items" :key="item.domain">
+        <Domain collapsed :name="item.domain" :domain="item.info"></Domain>
+      </div>
     </ul>
   </div>
 </template>
@@ -37,3 +35,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.domain-collapsed {
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
+.header {
+  font-size: 2rem;
+}
+</style>

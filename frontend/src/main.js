@@ -10,6 +10,7 @@ import {
   FormInputPlugin,
   InputGroupPlugin,
   TooltipPlugin,
+  CollapsePlugin,
 } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -24,6 +25,7 @@ Vue.use(FormGroupPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(TooltipPlugin);
+Vue.use(CollapsePlugin);
 
 new Vue({
   router,

@@ -2,7 +2,7 @@
   <mdb-navbar position="top" expand="medium" color="indigo" dark>
     <mdb-navbar-brand href="/">
       <a class="text-reset" href="/">
-        <img src="../assets/logo.png" height="30" alt="" />
+        <img src="../assets/images/logo.png" height="30" alt="" />
         Domain info
       </a>
     </mdb-navbar-brand>

@@ -43,3 +43,9 @@ export default {
   },
 };
 </script>
+
+<style>
+thead tr th {
+  font-weight: bold;
+}
+</style>
