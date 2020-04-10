@@ -29,7 +29,7 @@ export default {
   methods: {
     getDomain(domainName) {
       this.name = "";
-      this.domain = {};
+      this.domainInfo = {};
       this.loading = true;
       APIClient.getDomain(domainName).then((response) => {
         this.loading = false;

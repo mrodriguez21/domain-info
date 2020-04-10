@@ -27,10 +27,19 @@
         </filter>
       </defs>
     </svg>
+
+    <div id="loading-message">
+      SSL tests are being performed in the servers.
+      <br />
+      This process may take a while, please hold on.
+    </div>
   </div>
 </template>
 
 <style>
+#loading-message {
+  margin-top: 140px;
+}
 .cssload-dots {
   width: 0;
   height: 0;

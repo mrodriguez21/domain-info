@@ -64,4 +64,7 @@ export default {
   margin: auto;
   margin-bottom: 40px;
 }
+input {
+  text-align: center;
+}
 </style>

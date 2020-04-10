@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 
+	"github.com/AubSs/fasthttplogger"
 	"github.com/valyala/fasthttp"
 )
 
@@ -18,5 +19,10 @@ func main() {
 	service := NewService(connection)
 	defer connection.db.Close()
 
-	log.Fatal(fasthttp.ListenAndServe(*port, service.Handler))
+	server := &fasthttp.Server{
+		Handler: fasthttplogger.Tiny(service.Handler),
+		Name:    "FastHttpLogger",
+	}
+
+	log.Fatal(server.ListenAndServe(*port))
 }
