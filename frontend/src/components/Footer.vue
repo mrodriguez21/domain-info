@@ -10,19 +10,25 @@
           </h6>
         </mdb-col>
         <mdb-col md="6" lg="7" class="text-center text-md-right">
-          <a class="gi-ic">
+          <a class="gi-ic" href="https://github.com/mrodriguez21">
             <i class="fab fa-github white-text mr-lg-4"></i>
           </a>
-          <a class="li-ic">
+          <a
+            class="li-ic"
+            href="https://www.linkedin.com/in/mariana-rodriguez-ab1463144/"
+          >
             <i class="fab fa-linkedin-in white-text mr-lg-4"></i>
           </a>
-          <a class="fb-ic ml-0">
+          <a
+            class="fb-ic ml-0"
+            href="https://www.facebook.com/mariana.rodriguez137"
+          >
             <i class="fab fa-facebook white-text mr-lg-4"></i>
           </a>
-          <a class="tw-ic">
+          <a class="tw-ic" href="https://twitter.com/marshvee_">
             <i class="fab fa-twitter white-text mr-lg-4"></i>
           </a>
-          <a class="ins-ic">
+          <a class="ins-ic" href="https://instagram.com/marianars97/">
             <i class="fab fa-instagram white-text mr-lg-4"></i>
           </a>
         </mdb-col>
@@ -40,7 +46,7 @@ export default {
     mdbFooter,
     mdbContainer,
     mdbRow,
-    mdbCol
-  }
+    mdbCol,
+  },
 };
 </script>
