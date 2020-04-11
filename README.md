@@ -7,13 +7,15 @@ Domain Info is a web app for consulting information about a certain domain and i
 * Title - also taken from the HTML's head
 * SSL Grade - the lowest SSL grade of all its servers
 * Previous SSL Grade - the grade it had on the last request made (an hour or more ago)
-* Servers* - for each of them we get
+* Servers* 
   * Address - server's IP or host
   * SSL Grade - given by [SSL Labs](https://www.ssllabs.com/)
   * Country - get using  `whois <ip>`
   * Owner - name of the organization that owns the IP, get using  `whois <ip>`
 
 *We get this information using the [SSL Labs API](https://www.ssllabs.com/projects/ssllabs-apis/index.html).
+
+You can also see a list with all the past requests that have been made.
 
 ## Requirements
 
