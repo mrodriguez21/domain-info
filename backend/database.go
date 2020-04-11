@@ -10,22 +10,18 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-const (
-	addr string = "postgresql://marshvee@localhost:26257/domain_info?sslmode=disable"
-)
-
 // DBConnection stores the reference to the connection to the DB
 type DBConnection struct {
 	db *sql.DB
 }
 
 // NewDBConnection creates a new instance of a DBConnection.
-func NewDBConnection() *DBConnection {
-	db := setupDB()
+func NewDBConnection(addr string) *DBConnection {
+	db := setupDB(addr)
 	return &DBConnection{db: db}
 }
 
-func setupDB() *sql.DB {
+func setupDB(addr string) *sql.DB {
 	// Connect to CockroachDB
 	db, err := sql.Open("postgres", addr)
 	if err != nil {

@@ -10,12 +10,13 @@ import (
 
 var (
 	port = flag.String("port", ":8090", "Port to listen to")
+	addr = flag.String("addr", "postgresql://root@localhost:26257/domain_info?sslmode=disable", "The address of the database")
 )
 
 func main() {
 	flag.Parse()
 
-	connection := NewDBConnection()
+	connection := NewDBConnection(*addr)
 	service := NewService(connection)
 	defer connection.db.Close()
 

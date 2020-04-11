@@ -5,7 +5,7 @@
         <mdb-col md="6" lg="5" class="text-center text-md-left mb-4 mb-md-0">
           <h6 class="mb-0 text-light">
             Developed with ❤️ by
-            <a href="https://mrodriguez21.github.io/">Mariana Rodriguez</a>
+            <a href="https://mrodriguez21.github.io/">Mariana Rodriguez 👩‍💻</a>
             &copy; {{ new Date().getFullYear() }}
           </h6>
         </mdb-col>
@@ -13,16 +13,10 @@
           <a class="gi-ic" href="https://github.com/mrodriguez21">
             <i class="fab fa-github white-text mr-lg-4"></i>
           </a>
-          <a
-            class="li-ic"
-            href="https://www.linkedin.com/in/mariana-rodriguez-ab1463144/"
-          >
+          <a class="li-ic" href="https://www.linkedin.com/in/mariana-rodriguez-ab1463144/">
             <i class="fab fa-linkedin-in white-text mr-lg-4"></i>
           </a>
-          <a
-            class="fb-ic ml-0"
-            href="https://www.facebook.com/mariana.rodriguez137"
-          >
+          <a class="fb-ic ml-0" href="https://www.facebook.com/mariana.rodriguez137">
             <i class="fab fa-facebook white-text mr-lg-4"></i>
           </a>
           <a class="tw-ic" href="https://twitter.com/marshvee_">
@@ -46,7 +40,7 @@ export default {
     mdbFooter,
     mdbContainer,
     mdbRow,
-    mdbCol,
-  },
+    mdbCol
+  }
 };
 </script>
